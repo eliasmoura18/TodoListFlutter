@@ -1,43 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/widgets/todo_list_item.dart';
+import 'package:todolist/widgets/todolist_item.dart';
 
-// class TodoListPage extends StatelessWidget {
-//   TodoListPage({Key? key}) : super(key: key);
-//
-//   final TextEditingController emailController = TextEditingController();
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//         child: Padding(
-//           padding: const EdgeInsets.symmetric(horizontal: 16),
-//           child: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               TextField(
-//                 controller: emailController,
-//                 decoration: InputDecoration(
-//                   labelText: "E-mail",
-//                 ),
-//               ),
-//               ElevatedButton(
-//                 onPressed: login,
-//                 child: Text("Entrar"),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-//
-//   void login() {
-//     String text = emailController.text;
-//     print(text);
-//     emailController.clear();
-//   }
-// }
+import '../models/todo.dart';
 
 class TodoListPage extends StatefulWidget {
   TodoListPage({Key? key}) : super(key: key);
@@ -49,7 +13,7 @@ class TodoListPage extends StatefulWidget {
 class _TodoListPageState extends State<TodoListPage> {
   final TextEditingController todoController = TextEditingController();
 
-  List<String> todos = [];
+  List<Todo> todos = [];
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +41,11 @@ class _TodoListPageState extends State<TodoListPage> {
                         onPressed: () {
                           String text = todoController.text;
                           setState(() {
-                            todos.add(text);
+                            Todo novoTodo = Todo(
+                              title: text,
+                              dateTime: DateTime.now(),
+                            );
+                            todos.add(novoTodo);
                           });
                         },
                         style: ElevatedButton.styleFrom(
@@ -97,8 +65,8 @@ class _TodoListPageState extends State<TodoListPage> {
                       shrinkWrap: true,
                       //Ajusta dinamicamente o tamanho da view (do ListView). Cresce e aumenta conforme demanda. Como se fosse um heigth: auto e width: auto
                       children: [
-                        for (String todo in todos)
-                          TodoListItem(title: todo,),
+                        for (Todo td in todos)
+                          TodoListItem(todo: td,),
                       ],
                     ),
                   ),
@@ -112,7 +80,7 @@ class _TodoListPageState extends State<TodoListPage> {
                         width: 8,
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: limpar,
                         style: ElevatedButton.styleFrom(
                           primary: Color(0xff00d7f3),
                           padding: EdgeInsets.all(14),
@@ -127,4 +95,7 @@ class _TodoListPageState extends State<TodoListPage> {
       ),
     );
   }
+   void limpar() {
+     todos.clear();
+   }
 }
