@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 
 import '../models/todo.dart';
@@ -10,7 +11,7 @@ class TodoListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Slidable(actionPane: const SlidableDrawerActionPane(),child: Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         color: Colors.grey[200],
@@ -35,6 +36,6 @@ class TodoListItem extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ),);
   }
 }
